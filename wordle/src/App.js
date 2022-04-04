@@ -4,7 +4,7 @@ import Trouver from './Trouvermot'
 function App() {
   return (
     <div className="App">
-      <Trouver />
+      <header className='App-header'>  <Trouver /></header>
     </div>
   );
 }

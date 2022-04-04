@@ -26,7 +26,11 @@ func main() {
 			w.Write([]byte("Vous avez gagné"))
 			return
 		}
-		lettrescorrectes, _ := lib.Isword(motcible, motsaisi)
+		lettrescorrectes, err := lib.Isword(motcible, motsaisi)
+		if err != nil {
+			http.Error(w, "7", 500)
+			return
+		}
 		reponse := make(map[string]lib.InfoLettre)
 		for i, _ := range lettrescorrectes {
 			reponse[string(motsaisi[i])] = lettrescorrectes[i]
