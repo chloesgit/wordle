@@ -1,18 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"recette/wordle/lib"
 	"strings"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/chloesgit/wordle/lib"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(cors.Handler(cors.Options{}))
 	motcible := "Bonjour"
 	motcible = strings.ToLower(motcible)
 	r.Get("/{mot}", func(w http.ResponseWriter, r *http.Request) {
@@ -23,14 +27,14 @@ func main() {
 			return
 		}
 		lettrescorrectes, _ := lib.Isword(motcible, motsaisi)
-		message := ""
+		reponse := make(map[string]lib.InfoLettre)
 		for i, _ := range lettrescorrectes {
-			message = message + string(motsaisi[i]) + " est " + string(lettrescorrectes[i]) + "\n"
+			reponse[string(motsaisi[i])] = lettrescorrectes[i]
 		}
-		w.Write([]byte(message))
+		json.NewEncoder(w).Encode(reponse)
 
 	})
-	fmt.Println("http://localhost:3000")
-	http.ListenAndServe(":3000", r)
+	fmt.Println("http://localhost:8000")
+	http.ListenAndServe(":8000", r)
 
 }

@@ -6,18 +6,18 @@ import (
 	"strings"
 )
 
-type infoLettre string
+type InfoLettre string
 
 const (
-	infoBienPlace infoLettre = "Bien placé"
-	infoMalPlace  infoLettre = "Mal placé"
-	infoExistePas infoLettre = "Non existant"
+	infoBienPlace InfoLettre = "green"
+	infoMalPlace  InfoLettre = "orange"
+	infoExistePas InfoLettre = "red"
 )
 
-func Isword(motcible string, motsaisi string) ([]infoLettre, error) {
+func Isword(motcible string, motsaisi string) ([]InfoLettre, error) {
 	motcible = strings.ToLower(motcible)
 	motsaisi = strings.ToLower(motsaisi)
-	lettrescorrectes := make([]infoLettre, len(motsaisi))
+	lettrescorrectes := make([]InfoLettre, len(motsaisi))
 
 	if len(motcible) != len(motsaisi) {
 		return lettrescorrectes, errors.New("le mot entré n'a pas la bonne longueur")
